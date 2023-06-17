@@ -1423,9 +1423,9 @@ class EdgeConnect():
             self.test_dataset = Dataset(256, '/kaggle/input/train-test-set/val_256/', augment=False, training=True,
                                         isVal=True)
         else:
-            self.train_dataset = Dataset(256, './Humans/', augment=True, training=True,
+            self.train_dataset = Dataset(256, '../Humans/', augment=True, training=True,
                                          isVal=False, facesDataSet=True)
-            self.val_dataset = Dataset(256, './Humans/', augment=False, training=True, isVal=True,
+            self.val_dataset = Dataset(256, '../Humans/', augment=False, training=True, isVal=True,
                                        facesDataSet=True)
             self.sample_iterator = self.val_dataset.create_iterator(config.SAMPLE_SIZE)
 

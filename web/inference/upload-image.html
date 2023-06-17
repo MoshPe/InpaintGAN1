@@ -35,13 +35,24 @@
 </div>
   </div>
 </div>
- <a href="mask_image.html" target='here' onclick="saveGANData()" class="button-2" style="margin-left: 90%">Train the model</a>
-
+ <a href="mask_image.html" target='here' onclick="saveGANData()" class="button-2" style="margin-left: 90%">Upload Images</a>
+<script type="text/javascript" src="/eel.js"></script>
 <script type="text/javascript">
   function showPreview(event){
   if(event.target.files.length > 0){
-    var src = URL.createObjectURL(event.target.files[0]);
-    var preview = document.getElementById("file-ip-1-preview");
+    const src = URL.createObjectURL(event.target.files[0]);
+    const preview = document.getElementById("file-ip-1-preview");
+    console.log(event.target.files[0]);
+    console.log(src);
+
+        const reader = new FileReader();
+
+    reader.readAsDataURL(event.target.files[0]);
+    reader.addEventListener('load', () => {
+        eel.download_file(reader.result.slice(23))
+    });
+
+    // reader.readAsDataURL(src)
     preview.src = src;
     preview.style.display = "block";
   }

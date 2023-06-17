@@ -11,12 +11,12 @@
               <h1 style="text-align: center">Training Process</h1>
                 <div class="grid-container" style="grid-template-columns: auto auto auto auto;">
                   <div class="grid-item" style="grid-area: 1/ 1 / span 2 / span 2;">
-                      <textarea  id="Train" name="Train" value="Train"   style="border:none;margin-right: 30%;" readonly>can't write inside</textarea>
+                      <textarea  id="Train" name="Train" value="Train"   style="border:none;margin-right: 30%;" readonly></textarea>
                   </div>&nbsp;
                     <div class="grid-item" style="grid-area: 1/ 2 / span 1 / span 2;margin-left: 45%">
                         <span class="loader" ></span><br/>
                         <br/><br/><br/><br/>
-                        <label id="TrainPro">Training in progres.....</label>
+                        <label id="TrainPro">Training in progress.....</label>
                         </div>
                   <div class="grid-item" style="margin-top: 5%">
                       <label for="Precision">Precision:</label>
@@ -30,12 +30,16 @@
         </div>
     <script type="text/javascript" src="/eel.js"></script>
     <script type="text/javascript">
-      eel.expose(setStrings); // Expose this function to Python
-      function setStrings(x) {
-        document.getElementById("Precision").value="work";
-        document.getElementById("Recall").value="work";
-        document.getElementById("Train").value+="work";
+      eel.expose(setMetrics);
+      eel.expose(addLog);
+      function setMetrics(prec, recall) {
+        document.getElementById("Precision").value=prec;
+        document.getElementById("Recall").value=recall;
       }
+      function addLog(log) {
+        document.getElementById("Train").value+=log + '\r\n\r\n';
+      }
+      eel.train_model()
     </script>
     </body>
 </html>

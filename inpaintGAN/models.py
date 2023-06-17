@@ -3,8 +3,8 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 
-from loss import AdversarialLoss, PerceptualLoss, StyleLoss
-from networks import EdgeGenerator, Discriminator, InpaintGenerator
+from inpaintGAN.loss import AdversarialLoss, PerceptualLoss, StyleLoss
+from inpaintGAN.networks import EdgeGenerator, Discriminator, InpaintGenerator
 
 
 class BaseModel(nn.Module):
@@ -23,7 +23,6 @@ class BaseModel(nn.Module):
         self.dis_adam_path = os.path.join(config.PATH, name + '_optimizer_' + '_dis.pth')
 
     def load(self):
-        print('in load', self.name, self.gen_weights_path)
         gen_weights_path = '../weights/' + self.name + '_gen.pth'
         dis_weights_path = '../weights/' + self.name + '_dis.pth'
 

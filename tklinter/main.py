@@ -1,11 +1,6 @@
-import os.path
 import tkinter as tk
-from screens.inference import Inference
-from screens.train import Train
-from tkinter import ttk
-from tkinter import filedialog
-from PIL import Image, ImageTk
-from PIL import ImageDraw
+from tklinter.screens.inference import Inference
+from tklinter.screens.train import Train
 
 
 class RoundedButton(tk.Button):

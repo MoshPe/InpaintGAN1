@@ -90,7 +90,7 @@ class Progbar(object):
         self._start = time.time()
         self._last_update = 0
 
-    def update(self, current, values=None):
+    def update(self, addLog, current, values=None):
         """Updates the progress bar.
         Arguments:
             current: Index of current step.
@@ -99,6 +99,7 @@ class Progbar(object):
                 If `name` is in `stateful_metrics`,
                 `value_for_last_step` will be displayed as-is.
                 Else, an average of the metric over time will be displayed.
+                :param addLog:
         """
         values = values or []
         for k, v in values:
@@ -190,7 +191,7 @@ class Progbar(object):
 
             if self.target is not None and current >= self.target:
                 info += '\n'
-
+            addLog(bar + info)
             sys.stdout.write(info)
             # eel to js
             sys.stdout.flush()
@@ -211,5 +212,5 @@ class Progbar(object):
 
         self._last_update = now
 
-    def add(self, n, values=None):
-        self.update(self._seen_so_far + n, values)
+    def add(self, addLog, n, values=None):
+        self.update(addLog, self._seen_so_far + n, values)

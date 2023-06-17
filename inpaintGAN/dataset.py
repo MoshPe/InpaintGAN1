@@ -59,13 +59,8 @@ class Dataset(torch.utils.data.Dataset):
 
     def load_flist(self, flist):
         imagesPath = []
-        if os.path.isdir(flist):
-            print('inside')
-        else:
-            print('doesnt know it')
         if self.isSpecific == False:
             if self.facesDataSet:
-                print(flist)
                 if os.path.isdir(flist):
                     return list(glob.glob(flist + '/*.jpg')) + list(glob.glob(flist + '/*.png')) + list(
                         glob.glob(flist + '/*.jpeg'))
@@ -88,6 +83,7 @@ class Dataset(torch.utils.data.Dataset):
     def load_item(self, index):
         size = self.input_size
         img = cv2.imread(self.data[index])
+        img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
         if len(img.shape) < 3:
             img = gray2rgb(img)
         if size != 0:

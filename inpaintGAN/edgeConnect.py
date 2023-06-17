@@ -13,10 +13,10 @@ import torchvision.transforms.functional as F
 # from .models import EdgeModel, InpaintingModel
 # from .utils import Progbar, create_dir, stitch_images, imsave
 # from .metrics import PSNR, EdgeAccuracy
-from dataset import Dataset
-from metrics import EdgeAccuracy, PSNR
-from models import EdgeModel, InpaintingModel
-from utils import Progbar, create_dir, stitch_images
+from inpaintGAN.dataset import Dataset
+from inpaintGAN.metrics import EdgeAccuracy, PSNR
+from inpaintGAN.models import EdgeModel, InpaintingModel
+from inpaintGAN.utils import Progbar, create_dir, stitch_images
 
 
 class EdgeConnect():
@@ -54,8 +54,8 @@ class EdgeConnect():
                 self.test_dataset = Dataset(256, config, '/kaggle/input/train-test-set/val_256/', augment=False,
                                             training=True, isVal=True)
             else:
-                self.train_dataset = Dataset(config, 256, '../Humans/', augment=True, training=True, isVal=False, facesDataSet=True)
-                self.val_dataset = Dataset(config, 256, '../Humans/', augment=False, training=True, isVal=True, facesDataSet=True)
+                self.train_dataset = Dataset(config, 256, 'Humans/', augment=True, training=True, isVal=False, facesDataSet=True)
+                self.val_dataset = Dataset(config, 256, 'Humans/', augment=False, training=True, isVal=True, facesDataSet=True)
                 self.sample_iterator = self.val_dataset.create_iterator(config.SAMPLE_SIZE)
 
         self.samples_path = os.path.join(config.PATH, 'samples')
@@ -63,9 +63,9 @@ class EdgeConnect():
 
         self.log_file = os.path.join(config.PATH, 'log_' + model_name + '.dat')
 
-    def train(self):
+    def train(self, setMetrics, addLog):
         # Train
-        epoch = 229
+        epoch = 0
         keep_training = True
         model = self.config.MODEL
         max_iteration = int(float((self.config.MAX_ITERS)))
@@ -84,7 +84,7 @@ class EdgeConnect():
         while (keep_training):
             epoch += 1
             print('\n\nTraining epoch: %d' % epoch)
-
+            addLog('Training epoch: ' + str(epoch))
             progbar = Progbar(total, width=20, verbose=1, stateful_metrics=['epoch', 'iter'])
             for items in train_loader:
 
@@ -98,7 +98,7 @@ class EdgeConnect():
                 precision, recall = self.edgeacc(edges * masks, outputs * masks)
                 logs.append(('precision', precision.item()))
                 logs.append(('recall', recall.item()))
-
+                setMetrics(str(precision.item()), str(recall.item()))
                 # backward
                 self.edge_model.backward(gen_loss, dis_loss)
 
@@ -125,7 +125,7 @@ class EdgeConnect():
                            ("iter", iteration),
                        ] + logs
 
-                progbar.add(len(images),
+                progbar.add(addLog, len(images),
                             values=logs if self.config.VERBOSE else [x for x in logs if not x[0].startswith('l_')])
 
                 # log model at checkpoints
@@ -172,7 +172,7 @@ class EdgeConnect():
             self.edge_model.save()
             self.inpaint_model.save()
 
-    def log(self, logs):
+    def log(self, logs, addLog):
         with open(self.log_file, 'a') as f:
             f.write('%s\n' % ' '.join([str(item[1]) for item in logs]))
 

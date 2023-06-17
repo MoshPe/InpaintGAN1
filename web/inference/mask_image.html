@@ -25,7 +25,7 @@
 </nav>
 
 <div id="canvas_div" style="overflow-x: auto;">
-<canvas id="canvas" width="900" height="360" style="background-color: #beb8b8;background-image: url('../assets/home_btn.png')"></canvas>
+<canvas id="canvas" width="900" height="360" style="background-color: #beb8b8;background-image: url('image.jpeg'); background-size: cover;"></canvas>
        <br/>
 <button class="button-2" onclick="javascript:clearArea();return false;">Clear Area</button>
 
@@ -53,7 +53,6 @@ Line width : <select id="selWidth">
 
 
 </div>
-
 <script>
 // Get the modal
 var modal = document.getElementById("myModal");
@@ -91,7 +90,29 @@ let y = 0;
 var offsetX;
 var offsetY;
 
-function startup() {
+const img = new Promise(r => {
+  const img = new Image();
+
+  img.src = '../../inference/image.jpeg';
+  img.onload = () => r(img);
+});
+
+async function startup() {
+  const img = new Image();
+
+  img.src = '../../inference/image.jpeg';
+  img.onload = function() {
+        const aspect = img.width / img.height;
+      // Draw image and export to a data-uri
+      canvas.width = 360;
+      canvas.height = 360 / aspect;
+      // context.drawImage(img, 0, 0, canvas.width, canvas.height);
+      // const dataURI = canvas.toDataURL();
+      //
+      // // Do something with the result, like overwrite original
+      // img.src = dataURI;
+  }
+
   canvas.addEventListener('touchstart', handleStart);
   canvas.addEventListener('touchend', handleEnd);
   canvas.addEventListener('touchcancel', handleCancel);
