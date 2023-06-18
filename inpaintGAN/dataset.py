@@ -18,6 +18,7 @@ class Dataset(torch.utils.data.Dataset):
     def __init__(self, config, input_size, filepath, augment=True, training=True, isVal=False, facesDataSet=False,
                  isSpecific=False, mask_flist=None):
         super(Dataset, self).__init__()
+        self.mask_flist = mask_flist
         self.augment = augment
         self.training = training
         self.isVal = isVal
@@ -36,7 +37,7 @@ class Dataset(torch.utils.data.Dataset):
         self.data = self.load_flist(filepath)
         self.input_size = input_size
         #             self.edge_data = self.load_flist(edge_flist)
-        # self.mask_data = self.load_flist(mask_flist)
+        self.mask_data = self.load_flist(mask_flist)
         self.nms = config.NMS
         self.sigma = config.SIGMA
         self.edge = config.EDGE
@@ -117,6 +118,7 @@ class Dataset(torch.utils.data.Dataset):
     def load_mask(self, img, index):
         imgh, imgw = img.shape[0:2]
         mask_type = self.mask
+        print('mask type', mask_type)
 
         # external + random block
         if mask_type == 4:

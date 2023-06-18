@@ -219,27 +219,9 @@ class EdgeConnect():
         augment = True
         self.edge_model.eval()
         self.inpaint_model.eval()
-        #
-        # if len(img.shape) < 3:
-        #     img = gray2rgb(img)
-        #
-        # img_gray = rgb2gray(img)
-        # sigma = 1.3
-        # mask_a = (1 - mask / 255).astype(np.bool)
-        # edge = canny(img_gray, sigma=sigma, mask=mask_a).astype(np.float)
-        #
-        # if augment and np.random.binomial(1, 0.5) > 0:
-        #     img = img[:, ::-1, ...]
-        #     img_gray = img_gray[:, ::-1, ...]
-        #     edge = edge[:, ::-1, ...]
-        #     mask = mask[:, ::-1, ...]
-        #
-        # images, images_gray, edges, masks = self.to_tensor(img), self.to_tensor(img_gray), self.to_tensor(edge), self.to_tensor(mask)
-        # edges = self.edge_model(images_gray, edges, masks)
-        # outputs = self.inpaint_model(images, edges, masks)
 
-        fill_dataset = Dataset(self.config, 256, './image_mask.png', augment=False, training=True, isVal=True,
-                               isSpecific=True, mask_flist='./mask.png')
+        fill_dataset = Dataset(self.config, 256, 'web/inference/image.jpeg', augment=False, training=True, isVal=True, facesDataSet=False,
+                               isSpecific=True, mask_flist='web/inference/mask.jpeg')
         dataset_iterator = fill_dataset.create_iterator(1)
         items = next(dataset_iterator)
         images, images_gray, edges, masks = self.cuda(*items)

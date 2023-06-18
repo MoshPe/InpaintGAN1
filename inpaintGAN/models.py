@@ -23,11 +23,11 @@ class BaseModel(nn.Module):
         self.dis_adam_path = os.path.join(config.PATH, name + '_optimizer_' + '_dis.pth')
 
     def load(self):
-        gen_weights_path = '../weights/' + self.name + '_gen.pth'
-        dis_weights_path = '../weights/' + self.name + '_dis.pth'
+        gen_weights_path = 'weights/' + self.name + '_gen.pth'
+        dis_weights_path = 'weights/' + self.name + '_dis.pth'
 
-        gen_adam_path = '../weights/' + self.name + '_optimizer_' + '_gen.pth'
-        dis_adam_path = '../weights/' + self.name + '_optimizer_' + '_dis.pth'
+        gen_adam_path = 'weights/' + self.name + '_optimizer_' + '_gen.pth'
+        dis_adam_path = 'weights/' + self.name + '_optimizer_' + '_dis.pth'
 
         if os.path.exists(gen_weights_path):
             print('Loading %s generator...' % self.name)

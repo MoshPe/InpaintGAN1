@@ -49,7 +49,7 @@
 
     reader.readAsDataURL(event.target.files[0]);
     reader.addEventListener('load', () => {
-        eel.download_file(reader.result.slice(23))
+        eel.download_image_file(reader.result.slice(23))
     });
 
     // reader.readAsDataURL(src)
