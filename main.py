@@ -1,7 +1,7 @@
 import eel
 
 from inpaintGAN.Config import Config
-from inpaintGAN.edgeConnect import EdgeConnect
+from inpaintGAN.inpaintGAN import InpaintGAN
 from PIL import Image, ImageTk
 from torchvision.transforms import ToPILImage
 import base64
@@ -28,10 +28,10 @@ def is_folder_only_images(f_path):
 
 @eel.expose
 def train_model():
-    edgeConfig = Config()
+    inpaintConfig = Config()
     print(os.path.isdir(folder_path))
-    edgeConnect = EdgeConnect(edgeConfig, modelConfig['dataset_path'])
-    edgeConnect.train(eel.setMetrics, eel.addLog)
+    inpaintGAN = InpaintGAN(inpaintConfig, modelConfig['dataset_path'])
+    inpaintGAN.train(eel.setMetrics, eel.addLog)
 
 
 @eel.expose
@@ -51,16 +51,8 @@ def save_model_config(x):
 def get_dataset_path():
     root = tk.Tk()
     root.withdraw()
-
-    # Set the topmost attribute to True
     root.attributes('-topmost', True)
-
     folder_path = str(filedialog.askdirectory(parent=root))
-    # if not is_folder_only_images(folder_path):
-    #     eel.FolderContentError("The folder contains non-image files.")
-    # else:
-    #     print("here")
-    #     eel.FolderContentError(" ")
     eel.writeFolderPath(str(folder_path))
     folder_path += "/"
     print(os.path.isdir(folder_path))
@@ -68,12 +60,12 @@ def get_dataset_path():
 
 @eel.expose
 def test_model():
-    edgeConfig = Config()
-    edgeConfig.MASK = 6
-    edgeConfig.MODE = 4
-    edgeConnect = EdgeConnect(edgeConfig)
-    edgeConnect.load()
-    img = edgeConnect.fill_image(256)
+    inpaintConfig = Config()
+    inpaintConfig.MASK = 6
+    inpaintConfig.MODE = 4
+    inpaintGAN = InpaintGAN(inpaintConfig, "")
+    inpaintGAN.load()
+    img = inpaintGAN.fill_image(256)
     tensor_to_pil = ToPILImage()
     pil_image = tensor_to_pil(img.squeeze())
     pil_image.save("web/inference/test.jpeg")  # Replace "image.jpg" with the desired file path and extension

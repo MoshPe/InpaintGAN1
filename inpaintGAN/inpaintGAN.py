@@ -19,7 +19,7 @@ from inpaintGAN.models import EdgeModel, InpaintingModel
 from inpaintGAN.utils import Progbar, create_dir, stitch_images
 
 
-class EdgeConnect():
+class InpaintGAN():
     def __init__(self, config, folder_path):
         self.config = config
         os.environ['CUDA_VISIBLE_DEVICES'] = ','.join(str(e) for e in config.GPU)
@@ -136,11 +136,6 @@ class EdgeConnect():
                 if self.config.SAMPLE_INTERVAL and iteration % self.config.SAMPLE_INTERVAL == 0:
                     self.sample()
 
-                # evaluate model at checkpoints
-                #                 if self.config.EVAL_INTERVAL and iteration % self.config.EVAL_INTERVAL == 0:
-                #                     print('\nstart eval...\n')
-                #                     self.eval()
-
                 # save model at checkpoints
                 if self.config.SAVE_INTERVAL and iteration % self.config.SAVE_INTERVAL == 0:
                     self.save()
@@ -234,8 +229,6 @@ class EdgeConnect():
 
     def to_tensor(self, img):
         img = Image.fromarray(img)
-        #         plt.imshow(img)
-        #         plt.show()
         img_t = F.to_tensor(img).float()
         return img_t
 
@@ -345,10 +338,3 @@ class EdgeConnect():
         create_dir(path)
         print('\nsaving sample ' + name)
         images.save(name)
-
-    #             images = edges[0,...]
-    #             images = images[0,...]
-    #             print(tf.shape(images))
-    #             arr_ = np.squeeze(images) # you can give axis attribute if you wanna squeeze in specific dimension
-    #             plt.imshow(arr_, cmap="gray")
-    #             plt.show()
