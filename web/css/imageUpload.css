@@ -43,7 +43,7 @@
 
 .form-input img {
   width:100%;
-  display:none;
+  /*display:none;*/
 
   margin-bottom:30px;
 }
@@ -269,7 +269,7 @@ li:before {
     line-height: 45px;
     display: block;
     font-size: 18px;
-    color: #ffffff;
+    /*color: #ffffff;*/
     background: lightgray;
     border-radius: 50%;
     margin: 0 auto 10px auto;
@@ -289,7 +289,9 @@ li:after {
 
 li.active:before,
 li.active:after {
+    color: #0be848;
     background: #0be848;
+
 
 }
 

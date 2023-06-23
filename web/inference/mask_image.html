@@ -30,6 +30,8 @@
 <button class="button-2" onclick="javascript:clearArea();return false;">Clear Area</button>
 
 Line width : <select id="selWidth">
+    <option value="5">5</option>
+    <option value="7">7</option>
     <option value="11">11</option>
     <option value="13" selected="selected">13</option>
     <option value="15">15</option>
@@ -46,9 +48,6 @@ Line width : <select id="selWidth">
 
 <div id="myModal" class="modal">
   <!-- Modal content -->
-     <div class="modal-header">
-      <span class="close">&times;</span>
-    </div>
     <div class="loader" style="background-color: white;margin-left: 45%;margin-top: 5%"></div>
 
 
@@ -72,6 +71,8 @@ btn.onclick = function() {
     const image = canvas.toDataURL("image/jpeg");
     eel.download_mask_file(image.slice(23))
     eel.test_model()
+    window.location.href="./fill_missing_regions.html"
+    // move other page
 
     modal.style.display = "block";
 }

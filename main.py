@@ -41,7 +41,7 @@ def test_model():
     img = edgeConnect.fill_image(256)
     tensor_to_pil = ToPILImage()
     pil_image = tensor_to_pil(img.squeeze())
-    pil_image.save("test.jpeg")  # Replace "image.jpg" with the desired file path and extension
+    pil_image.save("web/inference/test.jpeg")  # Replace "image.jpg" with the desired file path and extension
 
 
 @eel.expose
