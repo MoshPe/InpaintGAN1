@@ -30,25 +30,30 @@
                   </div>
                         &nbsp;
                   <div class="grid-item">
-                    <h4 style="text-decoration: underline">The lists are imported from data sets</h4>
-                      <label for="train_list">Train List:</label>
-                      <select id="train_list" name="train_list" style="padding: 3px">
-                          <option value="train_flist">datasets/places2_train.flist</option>
-                      </select>
-                          </br>
-                      <label for="value_list">Value List:</label>
-                      <select id="value_list" name="value_list" style="padding: 3px">
-                            <option value="value_flist">datasets/places2_val.flist</option>
-                      </select>
-                          </br>
-                      <label for="test_list" >Test List:</label>
-                      <select id="test_list" name="test_list" style="padding: 3px">
-                        <option value="test_flist">datasets/places2_test.flist</option>
-                      </select>
+                    <h4 style="text-decoration: underline">Dataset Folder Path</h4>
+<!--                      <label for="train_list">Train List:</label>-->
+<!--                      <select id="train_list" name="train_list" style="padding: 3px">-->
+<!--                          <option value="train_flist">datasets/places2_train.flist</option>-->
+<!--                      </select>-->
+<!--                          </br>-->
+<!--                      <label for="value_list">Value List:</label>-->
+<!--                      <select id="value_list" name="value_list" style="padding: 3px">-->
+<!--                            <option value="value_flist">datasets/places2_val.flist</option>-->
+<!--                      </select>-->
+<!--                          </br>-->
+<!--                      <label for="test_list" >Test List:</label>-->
+<!--                      <select id="test_list" name="test_list" style="padding: 3px">-->
+<!--                        <option value="test_flist">datasets/places2_test.flist</option>-->
+<!--                      </select>-->
+<!--                      </br>-->
+<!--                      </br>-->
+                        <button type="button" id="file-ip-1" class="button-2" onclick="browseResult();">Select Dataset Path</button>
+                        <br><br><input type="text" id="dataset-path" readonly></br>
+                        <label id="errorMsg" style="color: red"></label>
                   </div>
             </div>
         </div>
-        <a href="trainB.html" onclick="saveModelData()"  target='here' class="button-2" style="margin-left: 90%">next</a>
+        <a href="trainB.html" onclick="return saveModelData()"  target='here' class="button-2" style="margin-left: 90%">next</a>
         <script type="text/javascript" src="/eel.js"></script>
         <script type = "text/javascript" src="train.js"></script>
     </body>

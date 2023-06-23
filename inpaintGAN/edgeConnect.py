@@ -20,7 +20,7 @@ from inpaintGAN.utils import Progbar, create_dir, stitch_images
 
 
 class EdgeConnect():
-    def __init__(self, config):
+    def __init__(self, config, folder_path):
         self.config = config
         os.environ['CUDA_VISIBLE_DEVICES'] = ','.join(str(e) for e in config.GPU)
         if torch.cuda.is_available():
@@ -54,8 +54,8 @@ class EdgeConnect():
                 self.test_dataset = Dataset(256, config, '/kaggle/input/train-test-set/val_256/', augment=False,
                                             training=True, isVal=True)
             else:
-                self.train_dataset = Dataset(config, 256, 'Humans/', augment=True, training=True, isVal=False, facesDataSet=True)
-                self.val_dataset = Dataset(config, 256, 'Humans/', augment=False, training=True, isVal=True, facesDataSet=True)
+                self.train_dataset = Dataset(config, 256, folder_path, augment=True, training=True, isVal=False, facesDataSet=True)
+                self.val_dataset = Dataset(config, 256, folder_path, augment=False, training=True, isVal=True, facesDataSet=True)
                 self.sample_iterator = self.val_dataset.create_iterator(config.SAMPLE_SIZE)
 
         self.samples_path = os.path.join(config.PATH, 'samples')

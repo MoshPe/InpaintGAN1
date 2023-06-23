@@ -3,10 +3,14 @@ const saveModelData = () => {
     model_to_train: document.getElementById('model_to_train').value,
     masking_image: document.getElementById('masking_image').value,
     edge_detector: document.getElementById('edge_detector').value,
-    train_list: document.getElementById('train_list').value,
-    value_list: document.getElementById('value_list').value,
-    test_list: document.getElementById('test_list').value ,
+    dataset_path: document.getElementById('dataset-path').value + "/",
   }
+  if (modelConfig.dataset_path === ""){
+      document.getElementById('errorMsg').innerHTML = "Dataset path is not defined"
+        return false
+  }
+    if (document.getElementById('errorMsg').innerHTML === "The folder contains non-image files.")
+        return false
   eel.save_model_config(modelConfig);
 };
 
@@ -29,4 +33,22 @@ const saveGANData = () => {
   }
   eel.save_model_config(modelConfig);
 };
+
+const browseResult = () => {
+  eel.get_dataset_path();
+}
+
+eel.expose(writeFolderPath)
+
+function writeFolderPath(resultPath) {
+  const fileselector = document.getElementById('dataset-path');
+  fileselector.style.width = resultPath.length * 10 + 'px';
+  fileselector.value = resultPath;
+}
+
+eel.expose(FolderContentError)
+
+function FolderContentError(error) {
+  document.getElementById('errorMsg').innerHTML = error
+}
 

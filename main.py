@@ -5,16 +5,32 @@ from inpaintGAN.edgeConnect import EdgeConnect
 from PIL import Image, ImageTk
 from torchvision.transforms import ToPILImage
 import base64
+from tkinter import filedialog
+import tkinter as tk
+import os
+import imghdr
 
 modelConfig = {}
 
+folder_path = "none"
+
 eel.init("web", allowed_extensions=['.js', '.html', '.png', '.txt'])
+
+
+def is_folder_only_images(f_path):
+    for filename in os.listdir(f_path):
+        file_path = os.path.join(f_path, filename)
+        if os.path.isfile(file_path):
+            if imghdr.what(file_path) is None:
+                return False
+    return True
 
 
 @eel.expose
 def train_model():
     edgeConfig = Config()
-    edgeConnect = EdgeConnect(edgeConfig)
+    print(os.path.isdir(folder_path))
+    edgeConnect = EdgeConnect(edgeConfig, modelConfig['dataset_path'])
     edgeConnect.train(eel.setMetrics, eel.addLog)
 
 
@@ -29,6 +45,25 @@ def save_model_config(x):
             except:
                 modelConfig[key] = x[key]
     print(modelConfig)
+
+
+@eel.expose
+def get_dataset_path():
+    root = tk.Tk()
+    root.withdraw()
+
+    # Set the topmost attribute to True
+    root.attributes('-topmost', True)
+
+    folder_path = str(filedialog.askdirectory(parent=root))
+    # if not is_folder_only_images(folder_path):
+    #     eel.FolderContentError("The folder contains non-image files.")
+    # else:
+    #     print("here")
+    #     eel.FolderContentError(" ")
+    eel.writeFolderPath(str(folder_path))
+    folder_path += "/"
+    print(os.path.isdir(folder_path))
 
 
 @eel.expose
