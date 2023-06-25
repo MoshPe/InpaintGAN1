@@ -86,8 +86,10 @@ In this step the model is utilized for testing. Uploading and image, creating a 
 #### 3. Mask image
   In this section the user is able to draw the mask onto the image for the model to fill.<br>
   The user can choose between several thicknesses of lines to draw and clear the drawn lines.
-  ![image](https://github.com/MoshPe/InpaintGAN/assets/57846100/b82da3b3-bf4b-43ed-bdd4-c51a071f8d91)
-  ![image](https://github.com/MoshPe/InpaintGAN/assets/57846100/790200ea-295b-4d82-a26e-ce3accaf99c9)
+  > **Warning** The model was trained upon a square mask so different kind of drawing might wont return the expected results.
+
+![image](https://github.com/MoshPe/InpaintGAN/assets/57846100/b82da3b3-bf4b-43ed-bdd4-c51a071f8d91)
+![image](https://github.com/MoshPe/InpaintGAN/assets/57846100/790200ea-295b-4d82-a26e-ce3accaf99c9)
 
 #### 4. Fill missing regions
   ![image](https://github.com/MoshPe/InpaintGAN/assets/57846100/e1ad3628-b91c-4e72-8976-61b390bfceec)
